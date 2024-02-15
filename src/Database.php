@@ -74,6 +74,25 @@ class Database
     }
   }
 
+  public function editTemplate(int $id, array $data): void
+  {
+    try {
+      $title = $this->conn->quote(($data['title']));
+      $message = $this->conn->quote(($data['message']));
+
+      $query = "
+        UPDATE templates
+        SET title = $title, message = $message
+        WHERE id = $id
+      ";
+
+      $this->conn->exec($query);
+
+    } catch (Throwable $e) {
+      throw new StorageException('Edit template failure', 400, $e);
+    }
+  }
+
   private function createConnection(array $config): void
   {
     $dsn = "mysql:dbname={$config['database']};host={$config['host']}";

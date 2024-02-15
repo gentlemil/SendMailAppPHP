@@ -22,6 +22,9 @@
           case 'created':
             echo 'Template has been created';
             break;
+          case 'edited':
+            echo 'Template has been updated';
+            break;
         }
       }
       ?>

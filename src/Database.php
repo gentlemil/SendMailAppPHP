@@ -26,7 +26,18 @@ class Database
     }
   }
 
-  public function createNote(array $data): void
+  public function getTemplates(): array
+  {
+    try {
+    $query = "SELECT id, title, message FROM templates";
+    $result = $this->conn->query($query);
+    return $result->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Throwable $e) {
+      throw new StorageException('Failed to fetch templates', 400, $e);
+    }
+  }
+
+  public function createTemplate(array $data): void
   {
     try {
       $title = $this->conn->quote($data['title']);
@@ -37,8 +48,6 @@ class Database
         INSERT INTO templates(title, message, created)
         VALUES($title, $message, $created)
       ";
-
-      dump($query);
 
       $this->conn->exec($query);
     } catch (Throwable $e) {

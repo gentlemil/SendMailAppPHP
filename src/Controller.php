@@ -39,8 +39,6 @@ class Controller
 
   public function run(): void
   {
-    $viewParams = [];
-
     switch ($this->action()) {
       case 'create':
         $page = 'create';
@@ -51,7 +49,7 @@ class Controller
             'title' => $data['title'],
             'message' => $data['message']
           ];
-          $this->database->createNote($templateData);
+          $this->database->createTemplate($templateData);
           header('Location: /?before=created');
         }
 
@@ -64,13 +62,17 @@ class Controller
         break;
       default:
         $page = 'list';
-
         $data = $this->getRequestGet();
-        $viewParams['before'] = $data['before'] ?? null;
-        break;
-    }
 
-    $this->view->render($page, $viewParams);
+        $viewParams = [
+          'templates' => $this->database->getTemplates(),
+          'before' => $data['before'] ?? null
+        ];
+
+        break;
+    } 
+
+    $this->view->render($page, $viewParams ?? []);
   }
 
   private function action(): string

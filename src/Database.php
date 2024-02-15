@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App;
 
 require_once("Exception/StorageException.php");
+require_once("Exception/NotFoundException.php");
 
-use App\Exception\ConfigurationException;
 use App\Exception\StorageException;
+use App\Exception\NotFoundException;
 use PDO;
 use PDOException;
 use Throwable;
@@ -24,6 +25,26 @@ class Database
     } catch (PDOException $e) {
       throw new StorageException('Connection error');
     }
+  }
+
+  public function getTemplate(int $id): array
+  {
+    try {
+      /* ID escaping not neccessary because we work in strict mode,
+       * so ID is int type for sure
+       */
+      $query = "SELECT * FROM templates WHERE id = $id";
+      $result = $this->conn->query($query);
+      $template = $result->fetch(PDO::FETCH_ASSOC);
+    } catch (Throwable $e) {
+      throw new StorageException("Failed to fetch template with id equal $id", 400, $e);
+    }
+
+    if (!$template) {
+      throw new NotFoundException("Template with id equal to $id does not exist.");
+    }
+
+    return $template;
   }
 
   public function getTemplates(): array

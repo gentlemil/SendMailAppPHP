@@ -2,6 +2,21 @@
   <section>
     <div class="message">
       <?php
+      if (!empty($params['error'])) {
+        switch ($params['error']) {
+          case 'templateNotFound':
+            echo 'Template not found.';
+            break;
+          case 'missingTemplateId':
+            echo 'Incorrect template ID.';
+            break;
+        }
+      }
+      ?>
+    </div>
+
+    <div class="message">
+      <?php
       if (!empty($params['before'])) {
         switch ($params['before']) {
           case 'created':
@@ -32,7 +47,11 @@
               <td><?php echo (int) $template['id'] ?></td>
               <td><?php echo htmlentities($template['title']) ?></td>
               <td><?php echo htmlentities($template['message']) ?></td>
-              <td>Options</td>
+              <td>
+                <a href="?action=show&id=<?php echo (int) $template['id'] ?>">
+                <button>Show details</button>
+              </a>
+              </td>
             </tr>
             <?php endforeach; ?>
         </tbody>

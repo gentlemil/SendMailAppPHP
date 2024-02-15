@@ -23,12 +23,12 @@ try {
   Controller::initConfiguration($configuration);
   (new Controller($request))->run();
 } catch (ConfigurationException $e) {
-  echo 'Error has occurred in the application';
-  echo 'Problem with the app, please try again in a moment.';
+  echo "Error has occurred in the application. ";
+  echo 'Problem with the app, please try again in a moment. ';
 } catch (AppException $e) {
-  echo 'Error has occurred in the application';
+  echo "Error has occurred in the application. ";
   echo $e->getMessage();
 } catch (Throwable $e) {
-  echo 'Error has occurred in the application';
+  echo "Error has occurred in the application. ";
   dump($e);
 }

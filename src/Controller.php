@@ -7,6 +7,7 @@ namespace App;
 require_once("src/Exception/ConfigurationException.php");
 
 use App\Exception\ConfigurationException;
+use App\Exception\NotFoundException;
 
 require_once("Database.php");
 require_once("View.php");
@@ -51,13 +52,30 @@ class Controller
           ];
           $this->database->createTemplate($templateData);
           header('Location: /?before=created');
+          exit;
         }
 
         break;
       case 'show':
+        $page = 'show';
+
+        $data = $this->getRequestGet();
+        $templateId = (int) ($data['id'] ?? null);
+
+        if (!$templateId) {
+          header('Location: /?error=missingTemplateId');
+          exit;
+        }
+
+        try {
+          $template = $this->database->getTemplate($templateId);
+        } catch (NotFoundException $e) {
+          header('Location: /?error=templateNotFound');
+          exit;
+        }
+
         $viewParams = [
-          'title' => 'Title',
-          'message' => 'Message'
+          'template' => $template
         ];
         break;
       default:
@@ -66,7 +84,8 @@ class Controller
 
         $viewParams = [
           'templates' => $this->database->getTemplates(),
-          'before' => $data['before'] ?? null
+          'before' => $data['before'] ?? null,
+          'error' => $data['error'] ?? null,
         ];
 
         break;

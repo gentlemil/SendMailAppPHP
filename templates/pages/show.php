@@ -20,6 +20,8 @@
         </li>        
     </ul>
 
+    <a href="/?action=edit&id=<?php echo $template['id'] ?>">Choose users</a>
+
     <?php else: ?>
         <p>No template to display</p>
     <?php endif; ?>

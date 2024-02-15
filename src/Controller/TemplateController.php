@@ -53,4 +53,11 @@ class TemplateController extends AbstactController
       ]
     );
   }
+
+  public function editAction()
+  {
+    $this->view->render(
+      'edit'
+    );
+  }
 }

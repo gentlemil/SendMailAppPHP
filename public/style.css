@@ -96,7 +96,7 @@ form .field-textarea {
 
 form input[type='submit'],
 form input[type='button'] {
-  background: cadetblue;
+  background: steelblue;
 
   border: none;
   color: #fff;
@@ -140,12 +140,12 @@ form > div:first-child > label:first-child > input {
 }
 
 form > div:first-child > label:first-child > input:focus {
-  box-shadow: 0 0 0px 2px cadetblue;
+  box-shadow: 0 0 0px 2px steelblue;
 }
 
 .header {
   text-align: center;
-  background-color: cadetblue;
+  background-color: steelblue;
   margin-bottom: 20px;
   padding: 20px 0;
 }
@@ -168,7 +168,7 @@ form > div:first-child > label:first-child > input:focus {
 
 .menu ul a {
   display: block;
-  color: cadetblue;
+  color: steelblue;
   font-size: 18px;
   text-transform: uppercase;
   padding: 16px 0;
@@ -189,7 +189,7 @@ form > div:first-child > label:first-child > input:focus {
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-  background-color: cadetblue;
+  background-color: steelblue;
   padding-bottom: 30px;
 }
 
@@ -209,14 +209,14 @@ table {
 
 .tbl-header {
   margin-top: 20px;
-  background-color: cadetblue;
+  background-color: steelblue;
   color: white;
 }
 
 .tbl-content {
   overflow-x: auto;
   margin-top: 0px;
-  border: 3px solid cadetblue;
+  border: 3px solid steelblue;
   color: #222;
   background-color: white;
 }
@@ -306,7 +306,7 @@ tr > td:nth-child(3) {
 
 button {
   border: none;
-  background-color: cadetblue;
+  background-color: steelblue;
   padding: 5px 10px;
   color: white;
   cursor: pointer;

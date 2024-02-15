@@ -27,11 +27,11 @@
     <div class="tbl-content">
       <table cellpadding="0" cellspacing="0" border="0">
         <tbody>
-          <?php foreach ($params['templates'] as $template): ?>
+          <?php foreach ($params['templates'] ?? [] as $template): ?>
             <tr>
-              <td><?php echo $template['id'] ?></td>
-              <td><?php echo $template['title'] ?></td>
-              <td><?php echo $template['message'] ?></td>
+              <td><?php echo (int) $template['id'] ?></td>
+              <td><?php echo htmlentities($template['title']) ?></td>
+              <td><?php echo htmlentities($template['message']) ?></td>
               <td>Options</td>
             </tr>
             <?php endforeach; ?>

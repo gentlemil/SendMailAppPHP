@@ -6,7 +6,8 @@ namespace App\Controller;
 
 use App\Request;
 use App\View;
-use App\Database;
+use App\TemplateDatabase;
+use App\UserDatabase;
 use App\Exception\ConfigurationException;
 
 abstract class AbstactController
@@ -15,7 +16,8 @@ abstract class AbstactController
 
   private static array $configuration = [];
 
-  protected Database $database;
+  protected TemplateDatabase $templateDatabase;
+  protected UserDatabase $userDatabase;
   protected Request $request;
   protected View $view;
 
@@ -29,7 +31,8 @@ abstract class AbstactController
     if (empty(self::$configuration['db'])) {
       throw new ConfigurationException('Configuration error');
     }
-    $this->database = new Database(self::$configuration['db']);
+    $this->templateDatabase = new TemplateDatabase(self::$configuration['db']);
+    $this->userDatabase = new UserDatabase(self::$configuration['db']);
 
     $this->request = $request;
     $this->view = new View();

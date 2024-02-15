@@ -15,7 +15,7 @@ class TemplateController extends AbstactController
         'title' => $this->request->postParam('title'),
         'message' => $this->request->postParam('message')
       ];
-      $this->database->createTemplate($templateData);
+      $this->templateDatabase->createTemplate($templateData);
 
       $this->redirect('/', ['before' => 'created']);
     }
@@ -32,7 +32,7 @@ class TemplateController extends AbstactController
     }
 
     try {
-      $template = $this->database->getTemplate($templateId);
+      $template = $this->templateDatabase->getTemplate($templateId);
     } catch (NotFoundException $e) {
       $this->redirect('/', ['error' => 'templateNotFound']);
     }
@@ -45,7 +45,7 @@ class TemplateController extends AbstactController
     $this->view->render(
       'list', 
       [
-      'templates' => $this->database->getTemplates(),
+      'templates' => $this->templateDatabase->getTemplates(),
       'before' => $this->request->getParam('before'),
       'error' => $this->request->getParam('error'),
       ]
@@ -62,7 +62,7 @@ class TemplateController extends AbstactController
         'message' => $this->request->postParam('message')
       ];
 
-      $this->database->editTemplate($templateId, $templateData);
+      $this->templateDatabase->editTemplate($templateId, $templateData);
       $this->redirect('/', ['before' => 'edited']);
 
     }
@@ -75,18 +75,17 @@ class TemplateController extends AbstactController
     };
 
     try {
-      $template = $this->database->getTemplate($templateId);
-      // TODO:
-      // create connection with user db,
-      // create mothod to get users list,
+      $template = $this->templateDatabase->getTemplate($templateId);
+      $users = $this->userDatabase->getUsers();
     } catch (NotFoundException $e) {
       $this->redirect('/', ['error' => 'templateNotFound']);
     }
 
     $this->view->render(
       'edit',
-      ['template' => $template,
-      //  'users' => $users,
+      [
+        'template' => $template,
+        'users' => $users,
       ],
     );
   }

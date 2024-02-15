@@ -34,29 +34,36 @@
       <table cellpadding="0" cellspacing="0" border="0">
         <thead>
           <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Message</th>
-            <th>Options</th>
+            <th style="width: 15%;">Id</th>
+            
+            <th style="width: 20%;">Title</th>
+            
+            <th style="width: 40%;">Message</th>
+            
+            <th style="width: 25%;">Options</th>
           </tr>
         </thead>
       </table>
     </div>
+
     <div class="tbl-content">
       <table cellpadding="0" cellspacing="0" border="0">
         <tbody>
           <?php foreach ($params['templates'] ?? [] as $template): ?>
             <tr>
-              <td><?php echo (int) $template['id'] ?></td>
-              <td><?php echo htmlentities($template['title']) ?></td>
-              <td><?php echo htmlentities($template['message']) ?></td>
-              <td>
+              <td style="width: 15%;"><?php echo (int) $template['id'] ?></td>
+              
+              <td style="width: 20%;"><?php echo htmlentities($template['title']) ?></td>
+              
+              <td style="width: 40%;"><?php echo htmlentities($template['message']) ?></td>
+              
+              <td style="width: 25%;">
                 <a href="?action=show&id=<?php echo (int) $template['id'] ?>">
-                <button>Show details</button>
+                <button>DETAILS</button>
               </a>
               </td>
             </tr>
-            <?php endforeach; ?>
+          <?php endforeach; ?>
         </tbody>
       </table>
     </div>

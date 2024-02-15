@@ -6,25 +6,11 @@ namespace App;
 
 use App\Exception\StorageException;
 use App\Exception\NotFoundException;
-use App\Exception\ConfigurationException;
-use PDO;
-use PDOException;
 use Throwable;
+use PDO;
 
-class Database
+class TemplateDatabase extends AbstractDatabase
 {
-  private PDO $conn;
-
-  public function __construct(array $config)
-  {
-    try {
-      $this->validateConfig($config);
-      $this->createConnection($config);
-    } catch (PDOException $e) {
-      throw new StorageException('Connection error');
-    }
-  }
-
   public function getTemplate(int $id): array
   {
     try {
@@ -70,7 +56,7 @@ class Database
 
       $this->conn->exec($query);
     } catch (Throwable $e) {
-      throw new StorageException('Failed to create a new note', 400, $e);
+      throw new StorageException('Failed to create a new template', 400, $e);
     }
   }
 
@@ -90,31 +76,6 @@ class Database
 
     } catch (Throwable $e) {
       throw new StorageException('Edit template failure', 400, $e);
-    }
-  }
-
-  private function createConnection(array $config): void
-  {
-    $dsn = "mysql:dbname={$config['database']};host={$config['host']}";
-    $this->conn = new PDO(
-      $dsn,
-      $config['user'],
-      $config['password'],
-      [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-      ]
-    );
-  }
-
-  private function validateConfig(array $config): void
-  {
-    if (
-      empty($config['database'])
-      || empty($config['host'])
-      || empty($config['user'])
-      || empty($config['password'])
-    ) {
-      throw new ConfigurationException('Storage configuration error');
     }
   }
 }

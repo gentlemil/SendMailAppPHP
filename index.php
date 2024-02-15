@@ -2,19 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App;
+spl_autoload_register(function (string $classNamespace) {
+  $path = str_replace(['\\', 'App/'], ['/', ''], $classNamespace);
+  $path = "src/$path.php";
+  require_once($path);
+});
 
+require_once("src/Utils/debug.php");
+$configuration = require_once("config/config.php");
+
+use App\Controller\AbstactController;
+use App\Controller\TemplateController;
 use App\Request;
 use App\Exception\AppException;
 use App\Exception\ConfigurationException;
-use Throwable;
-
-require_once("src/Utils/debug.php");
-require_once("src/TemplateController.php");
-require_once("src/Request.php");
-require_once("./src/Exception/AppException.php");
-
-$configuration = require_once("config/config.php");
 
 $request = new Request($_GET, $_POST);
 
@@ -28,7 +29,7 @@ try {
 } catch (AppException $e) {
   echo "Error has occurred in the application. ";
   echo $e->getMessage();
-} catch (Throwable $e) {
+} catch (\Throwable $e) {
   echo "Error has occurred in the application. ";
   dump($e);
 }

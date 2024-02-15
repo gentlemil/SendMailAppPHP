@@ -4,17 +4,35 @@ declare(strict_types=1);
 
 namespace App;
 
-require_once("src/View.php");
+require_once("src/Exception/ConfigurationException.php");
+
+use App\Exception\ConfigurationException;
+
+require_once("Database.php");
+require_once("View.php");
 
 class Controller
 {
   private const DEFAULT_ACTION = 'list';
 
+  private static array $configuration = [];
+
+  private Database $database;
   private array $request;
   private View $view;
 
+  public static function initConfiguration(array $configuration): void
+  {
+    self::$configuration = $configuration;
+  }
+
   public function __construct(array $request)
   {
+    if (empty(self::$configuration['db'])) {
+      throw new ConfigurationException('Configuration error');
+    }
+    $this->database = new Database(self::$configuration['db']);
+
     $this->request = $request;
     $this->view = new View();
   }
@@ -26,28 +44,29 @@ class Controller
     switch ($this->action()) {
       case 'create':
         $page = 'create';
-        $created = false;
 
         $data = $this->getRequestPost();
         if (!empty($data)) {
-          $created = true;
-          $viewParams = [
+          $templateData = [
             'title' => $data['title'],
             'message' => $data['message']
           ];
+          $this->database->createNote($templateData);
+          header('Location: /?before=created');
         }
 
-        $viewParams['created'] = $created;
         break;
       case 'show':
         $viewParams = [
-          'title' => 'My title',
-          'message' => 'My message'
+          'title' => 'Title',
+          'message' => 'Message'
         ];
         break;
       default:
         $page = 'list';
-        $viewParams['resultList'] = "show templates";
+
+        $data = $this->getRequestGet();
+        $viewParams['before'] = $data['before'] ?? null;
         break;
     }
 

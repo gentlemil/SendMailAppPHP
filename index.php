@@ -23,7 +23,7 @@ $request = new Request($_GET, $_POST, $_SERVER);
 try {
   AbstactController::initConfiguration($configuration);
   (new TemplateController($request))->run();
-  // (new UserController($request))->run();
+  (new UserController($request))->run();
 } catch (ConfigurationException $e) {
   echo "Error has occurred in the application. ";
   echo 'Problem with the app, please try again in a moment. ';
@@ -34,3 +34,5 @@ try {
   echo "Error has occurred in the application. ";
   dump($e);
 }
+
+// #########

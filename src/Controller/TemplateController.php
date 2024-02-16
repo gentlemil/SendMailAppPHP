@@ -5,6 +5,11 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Exception\NotFoundException;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php';
 
 class TemplateController extends AbstactController
 {
@@ -66,39 +71,34 @@ class TemplateController extends AbstactController
         'message' => $message,
       ];
 
-        $mail = new PHPMailer;
-        $mail->SMTPDebug = 5;                                 
-
-        $mail->isSMTP();                                      
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = EMAIL;
-        $mail->Password = PASS;
-        $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;
-
-        $mail->setFrom(EMAIL, 'Milosz Bukala');
-        $mail->addAddress($mailData['email'], $user['firstName'] . " " . $user['lastName']); 
-        $mail->addReplyTo(EMAIL, 'Milosz Bukala');
-
-        $mail->isHTML(true);
-
-        $mail->Subject = $templateData['title'];
-        $mail->Body    = $message;
-        $mail->AltBody = $message;
-
-        if(!$mail->send()) {
-            echo 'Message could not be sent.';
-            echo 'Mailer Error: ' . $mail->ErrorInfo;
-        } else {
-            echo 'Message has been sent';
-        }
+      $mail = new PHPMailer(true);
 
       try {
-        mail($mailData['to'], $mailData['subject'], $mailData['message']);
+          $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+          $mail->isSMTP();
+          
+          $mail->Host = 'smtp.gmail.com';
+          $mail->SMTPAuth = true;   
+          $mail->Username = 'example@gmail.com';    // provide user/company account details
+          $mail->Password = 'account_password'; 
+          $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+          $mail->Port = 465;
 
-      } catch (NotFoundException $e) {
-        $this->redirect('/', ['error' => 'sentMailError']);
+          $mail->setFrom('milosz.bukala.mbit@gmail.com', 'company');
+          $mail->addAddress($mailData['email'], $user['firstName'] . " " . $user['lastName']);
+          $mail->addReplyTo('milosz.bukala.mbit@gmail.com', 'company');
+          $mail->isHTML(true);
+          
+          $mail->Subject = $templateData['title'];
+          $mail->Body    = $message;
+          $mail->AltBody = $message;
+
+          $mail->send();
+
+      } catch (Exception $e) {
+          dump($e);
+          echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+          $this->redirect('/', ['error' => 'sentMailError']);
       }
     }
     $this->redirect('/', ['before' => 'sent']);

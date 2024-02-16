@@ -22,7 +22,7 @@
         </li>
         
         <li>
-          <input type="submit" value="Edit template" />
+          <input type="submit" name="edit" value="Edit template" />
         </li>
       </ul>
     </form>
@@ -64,36 +64,33 @@
       <form method="post">
         <table cellpadding="0" cellspacing="0" border="0">
           <tbody>
-            <?php foreach ($params['users'] ?? [] as $users): ?>
+            <?php foreach ($params['users'] ?? [] as $user): ?>
               <tr>
                 <td style="width: 10%;">
-                  <input type="checkbox" name="selectedUsers[]" value="<?php echo (int) $users['id'] ?>">
+                  <input type="checkbox" name="selectedUsers[]" value="<?php echo $user['id'] ?>">
                 </td>
 
-                <td style="width: 20%;"><?php echo htmlentities($users['firstName']) ?></td>
+                <td style="width: 20%;"><?php echo htmlentities($user['firstName']) ?></td>
                 
-                <td style="width: 20%;"><?php echo htmlentities($users['lastName']) ?></td>
+                <td style="width: 20%;"><?php echo htmlentities($user['lastName']) ?></td>
                 
-                <td style="width: 30%;"><?php echo htmlentities($users['email']) ?></td>
+                <td style="width: 30%;"><?php echo htmlentities($user['email']) ?></td>
                 
-                <td style="width: 20%;"><?php echo htmlentities($users['position']) ?></td>
+                <td style="width: 20%;"><?php echo htmlentities($user['position']) ?></td>
                 
               </tr>
             <?php endforeach; ?>
           </tbody>
         </table>
 
-        <input type="submit" value="Send mail" style="margin-top: 20px;" />
+        <input type="submit" name="send" value="Send mail" style="margin-top: 20px;" />
       </form>
-      </div>
-    
-    
+    </div>
 
-  <?php else : ?>
+    <?php else : ?>
     <div>
       <i>No users</i>
     </div>
     
-  <?php endif; ?>
-
+    <?php endif; ?>
 </section>

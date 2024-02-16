@@ -22,6 +22,19 @@ class UserDatabase extends AbstractDatabase
     }
   }
 
+  public function getUser(int $id): array
+  {
+    try {
+      $query = "SELECT * FROM users WHERE id = $id";
+      $result = $this->conn->query($query);
+      $user = $result->fetch(PDO::FETCH_ASSOC);    
+    } catch (Throwable $e) {
+      throw new StorageException('Failed to fetch users', 400, $e);
+    }
+
+    return $user;
+  }
+
   public function createUser(array $data): void
   {
     try {

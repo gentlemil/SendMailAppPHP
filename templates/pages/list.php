@@ -10,6 +10,9 @@
           case 'missingTemplateId':
             echo 'Incorrect template ID.';
             break;
+          case 'sentMailError':
+            echo 'Send mail failure. Try again.';
+            break;
         }
       }
       ?>
@@ -24,6 +27,9 @@
             break;
           case 'edited':
             echo 'Template has been updated';
+            break;
+          case 'sent':
+            echo 'Mail template has been sent successfully';
             break;
         }
       }

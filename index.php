@@ -13,6 +13,7 @@ $configuration = require_once("config/config.php");
 
 use App\Controller\AbstactController;
 use App\Controller\TemplateController;
+use App\Controller\UserController;
 use App\Request;
 use App\Exception\AppException;
 use App\Exception\ConfigurationException;
@@ -21,8 +22,8 @@ $request = new Request($_GET, $_POST, $_SERVER);
 
 try {
   AbstactController::initConfiguration($configuration);
-  // TODO: add logic when create another controller
   (new TemplateController($request))->run();
+  // (new UserController($request))->run();
 } catch (ConfigurationException $e) {
   echo "Error has occurred in the application. ";
   echo 'Problem with the app, please try again in a moment. ';

@@ -18,6 +18,7 @@
         <ul>
           <li><a href="/">Main Page</a></li>
           <li><a href="/?action=create">New Template</a></li>
+          <!-- <li><a href="/?action=createUser">New User</a></li> -->
         </ul>
       </nav>
 

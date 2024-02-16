@@ -66,6 +66,34 @@ class TemplateController extends AbstactController
         'message' => $message,
       ];
 
+        $mail = new PHPMailer;
+        $mail->SMTPDebug = 5;                                 
+
+        $mail->isSMTP();                                      
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = EMAIL;
+        $mail->Password = PASS;
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+
+        $mail->setFrom(EMAIL, 'Milosz Bukala');
+        $mail->addAddress($mailData['email'], $user['firstName'] . " " . $user['lastName']); 
+        $mail->addReplyTo(EMAIL, 'Milosz Bukala');
+
+        $mail->isHTML(true);
+
+        $mail->Subject = $templateData['title'];
+        $mail->Body    = $message;
+        $mail->AltBody = $message;
+
+        if(!$mail->send()) {
+            echo 'Message could not be sent.';
+            echo 'Mailer Error: ' . $mail->ErrorInfo;
+        } else {
+            echo 'Message has been sent';
+        }
+
       try {
         mail($mailData['to'], $mailData['subject'], $mailData['message']);
 

@@ -4,20 +4,20 @@
     
     <ul>
         <li>
-            Id: 
-            <?php echo htmlentities($template['id']) ?>
+            <b>Id: </b><?php echo htmlentities($template['id']) ?>
         </li>
-        <li>
-            Title: 
-            <?php echo htmlentities($template['title']) ?>
+        
+        <li style="width: 100%; display: flex; justify-content: space-between; padding-top: 5px">
+            <div><b>Title: </b><?php echo htmlentities($template['title']) ?></div>
+            <i style="opacity: 0.7;"><?php echo htmlentities($template['created']) ?></i>
         </li>
-        <li>
-            Created: 
-            <?php echo htmlentities($template['created']) ?>
-        </li>
-            <li>
-            Message: 
-            <?php echo htmlentities($template['message']) ?>
+        
+        <li style="padding-top: 10px;">
+            <b>Message: </b>
+            <br />
+            <p style="text-align: justify;">
+                <i><?php echo htmlentities($template['message']) ?></i>
+            </p>
         </li>        
     </ul>
 

@@ -1,7 +1,5 @@
 <section>
-  <i>Here you can edit template, choose users and send message to your colleagues</i>
-  <br />
-  <h3>Edit template before send message</h3>
+  <h3 class="sub-header">1. Preview template</h3>
   
   <div>
     <?php if (!empty($params['template'])) : ?>
@@ -39,7 +37,7 @@
     <?php endif; ?>
   </div>
 
-  <h3>Choose users</h3>
+  <h3 class="sub-header">2. Choose users</h3>
 
   <?php if (!empty($params['users'])) : ?>
     <div class="tbl-header">

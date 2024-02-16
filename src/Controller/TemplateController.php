@@ -104,7 +104,6 @@ class TemplateController extends AbstactController
     $this->redirect('/', ['before' => 'sent']);
   }
 
-
   public function editAction()
   {
     if ($this->request->isPost()) {

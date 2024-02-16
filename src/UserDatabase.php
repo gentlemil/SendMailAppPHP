@@ -10,10 +10,14 @@ use PDO;
 
 class UserDatabase extends AbstractDatabase
 {
-  public function getUsers(): array
+  public function getUsers(string $filterBy = null): array
   {
     try {
-    $query = "SELECT id, firstName, lastName, email, position FROM users";
+      if ($filterBy) {
+        $query = "SELECT id, firstName, lastName, email, position FROM users WHERE position = $filterBy";
+      } else {
+        $query = "SELECT id, firstName, lastName, email, position FROM users";
+      }
     $result = $this->conn->query($query);
     
     return $result->fetchAll(PDO::FETCH_ASSOC);

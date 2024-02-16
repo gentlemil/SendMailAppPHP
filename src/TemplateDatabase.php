@@ -14,9 +14,6 @@ class TemplateDatabase extends AbstractDatabase
   public function getTemplate(int $id): array
   {
     try {
-      /* ID escaping not neccessary because we work in strict mode,
-       * so ID is int type for sure
-       */
       $query = "SELECT * FROM templates WHERE id = $id";
       $result = $this->conn->query($query);
       $template = $result->fetch(PDO::FETCH_ASSOC);
